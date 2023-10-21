@@ -95,6 +95,7 @@
             // 
             // gb_stuRegister
             // 
+            this.gb_stuRegister.Controls.Add(this.linkLabel1);
             this.gb_stuRegister.Controls.Add(this.btn_clear);
             this.gb_stuRegister.Controls.Add(this.btn_delete);
             this.gb_stuRegister.Controls.Add(this.btn_update);
@@ -106,7 +107,7 @@
             this.gb_stuRegister.Controls.Add(this.cb_regNo);
             this.gb_stuRegister.Location = new System.Drawing.Point(12, 48);
             this.gb_stuRegister.Name = "gb_stuRegister";
-            this.gb_stuRegister.Size = new System.Drawing.Size(634, 685);
+            this.gb_stuRegister.Size = new System.Drawing.Size(634, 706);
             this.gb_stuRegister.TabIndex = 2;
             this.gb_stuRegister.TabStop = false;
             this.gb_stuRegister.Text = "Student Registation";
@@ -433,7 +434,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(618, 718);
+            this.linkLabel1.Location = new System.Drawing.Point(600, 684);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(28, 16);
             this.linkLabel1.TabIndex = 3;
@@ -445,13 +446,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(658, 745);
-            this.Controls.Add(this.linkLabel1);
+            this.ClientSize = new System.Drawing.Size(658, 766);
             this.Controls.Add(this.gb_stuRegister);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ll_logout);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(676, 792);
+            this.MinimumSize = new System.Drawing.Size(676, 813);
             this.Name = "StudentRegistation";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Student Registation - studentRegistation";
