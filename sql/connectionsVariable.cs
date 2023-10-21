@@ -10,8 +10,10 @@ namespace FinalProject.sql
     internal class ConnectionsVariable
     {
         public string Server { get; } = "localhost";
+        public int Port { get; } = 3306;
         public string User { get; } = "root";
         public string Database { get; } = "learning";
+        public string Table { get; } = "registration";
         public string Password { get; } = "";
     }
 }
