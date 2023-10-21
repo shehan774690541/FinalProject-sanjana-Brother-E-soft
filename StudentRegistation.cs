@@ -210,9 +210,9 @@ namespace FinalProject
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Data update not successfully!", "Update");
             }
             finally
             {
@@ -230,13 +230,13 @@ namespace FinalProject
             {
                 MySqlCommand cmd = new MySqlCommand(query, connection);
                 cmd.ExecuteNonQuery();
-                MessageBox.Show("Data deleted successfully!");
+                MessageBox.Show("Data deleted successfully!", "Delete");
                 ClearRegister();
                 RegisterNo();
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Data deleted not successfully!", "Delete");
             }
             finally
             {

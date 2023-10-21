@@ -157,6 +157,7 @@
             this.MinimumSize = new System.Drawing.Size(682, 682);
             this.Name = "loggin_form";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Load += new System.EventHandler(this.loggin_form_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pb_logo1)).EndInit();
             this.gb_login.ResumeLayout(false);
             this.gb_login.PerformLayout();

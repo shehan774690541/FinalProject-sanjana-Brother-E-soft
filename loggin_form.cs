@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace FinalProject
 {
@@ -14,7 +15,8 @@ namespace FinalProject
     {
         public loggin_form()
         {
-            InitializeComponent();
+          InitializeComponent();
+            
         }
 
         private void btn_exit_Click(object sender, EventArgs e)
@@ -24,19 +26,22 @@ namespace FinalProject
             if (result == DialogResult.OK)
             {
                 this.Close();
+                
             }
         }
 
         private void btn_clear_Click(object sender, EventArgs e)
         {
             // development after change => tb_password.Text = "";   =>tb_userName.Text = "";
-            tb_password.Text = "Admin";
-            tb_userName.Text = "Skills@123";
+            //tb_password.Text = "Admin";
+            //tb_userName.Text = "Skills@123";
+            tb_password.Text = "";
+            tb_userName.Text = "";
         }
 
         private void btn_login_Click(object sender, EventArgs e)
         {
-            if (tb_password.Text == "Admin" && tb_userName.Text == "Skills@123") {
+            if (tb_password.Text == "Skills@123" && tb_userName.Text == "Admin") {
 
                 StudentRegistation studentRegistation = new StudentRegistation();
                 this.Hide();
@@ -52,6 +57,15 @@ namespace FinalProject
         private void closeStudentRgister(object sender, FormClosedEventArgs e)
         {
             this.Close();
+
+        }
+
+
+        
+
+        private void loggin_form_Load(object sender, EventArgs e)
+        {
+           
         }
     }
 }
