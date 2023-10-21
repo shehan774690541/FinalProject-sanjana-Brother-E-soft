@@ -43,12 +43,14 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.gb_contactDetails = new System.Windows.Forms.GroupBox();
+            this.tb_email = new System.Windows.Forms.TextBox();
             this.tb_homeNumber = new System.Windows.Forms.TextBox();
             this.tb_mobileNumber = new System.Windows.Forms.TextBox();
             this.tb_NIC = new System.Windows.Forms.TextBox();
             this.tb_address = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -64,9 +66,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.cb_regNo = new System.Windows.Forms.ComboBox();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.btnConnections = new System.Windows.Forms.Button();
-            this.label14 = new System.Windows.Forms.Label();
-            this.tb_email = new System.Windows.Forms.TextBox();
             this.gb_stuRegister.SuspendLayout();
             this.gb_parent.SuspendLayout();
             this.gb_contactDetails.SuspendLayout();
@@ -98,7 +97,6 @@
             // 
             this.gb_stuRegister.Controls.Add(this.btn_clear);
             this.gb_stuRegister.Controls.Add(this.btn_delete);
-            this.gb_stuRegister.Controls.Add(this.btnConnections);
             this.gb_stuRegister.Controls.Add(this.btn_update);
             this.gb_stuRegister.Controls.Add(this.btn_register);
             this.gb_stuRegister.Controls.Add(this.gb_parent);
@@ -235,6 +233,13 @@
             this.gb_contactDetails.TabStop = false;
             this.gb_contactDetails.Text = "Contact Details";
             // 
+            // tb_email
+            // 
+            this.tb_email.Location = new System.Drawing.Point(144, 116);
+            this.tb_email.Name = "tb_email";
+            this.tb_email.Size = new System.Drawing.Size(410, 22);
+            this.tb_email.TabIndex = 5;
+            // 
             // tb_homeNumber
             // 
             this.tb_homeNumber.Location = new System.Drawing.Point(399, 190);
@@ -281,6 +286,15 @@
             this.label9.Size = new System.Drawing.Size(99, 16);
             this.label9.TabIndex = 0;
             this.label9.Text = "Mobile Number";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(21, 117);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(45, 16);
+            this.label14.TabIndex = 0;
+            this.label14.Text = "E-mail";
             // 
             // label8
             // 
@@ -414,6 +428,7 @@
             this.cb_regNo.Size = new System.Drawing.Size(249, 24);
             this.cb_regNo.TabIndex = 0;
             this.cb_regNo.TextChanged += new System.EventHandler(this.cb_regNo_TextChanged);
+            this.cb_regNo.MouseUp += new System.Windows.Forms.MouseEventHandler(this.cb_regNo_MouseUp);
             // 
             // linkLabel1
             // 
@@ -425,32 +440,6 @@
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "Exit";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
-            // 
-            // btnConnections
-            // 
-            this.btnConnections.Location = new System.Drawing.Point(191, 644);
-            this.btnConnections.Name = "btnConnections";
-            this.btnConnections.Size = new System.Drawing.Size(101, 31);
-            this.btnConnections.TabIndex = 6;
-            this.btnConnections.Text = "connection";
-            this.btnConnections.UseVisualStyleBackColor = true;
-            this.btnConnections.Click += new System.EventHandler(this.btnConnections_Click);
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(21, 117);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(45, 16);
-            this.label14.TabIndex = 0;
-            this.label14.Text = "E-mail";
-            // 
-            // tb_email
-            // 
-            this.tb_email.Location = new System.Drawing.Point(144, 116);
-            this.tb_email.Name = "tb_email";
-            this.tb_email.Size = new System.Drawing.Size(410, 22);
-            this.tb_email.TabIndex = 5;
             // 
             // StudentRegistation
             // 
@@ -518,7 +507,6 @@
         private System.Windows.Forms.Button btn_update;
         private System.Windows.Forms.Button btn_register;
         private System.Windows.Forms.LinkLabel linkLabel1;
-        private System.Windows.Forms.Button btnConnections;
         private System.Windows.Forms.TextBox tb_email;
         private System.Windows.Forms.Label label14;
     }

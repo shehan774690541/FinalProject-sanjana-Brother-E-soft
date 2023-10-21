@@ -37,6 +37,8 @@ namespace FinalProject
             tb_email.Text = "";
             rb_female.Checked = false;
             rb_male.Checked = false;
+            dtp_dof.Text = DateTime.Today.ToString("yyyy - MM - dd");
+            
         }
         public void AddInformations()
         {
@@ -71,13 +73,14 @@ namespace FinalProject
 
                         if (command.ExecuteNonQuery() == 1)
                         {
-                            MessageBox.Show("Data Inserted!");
+                            MessageBox.Show("Recode Added Successful!", "Register Student");
                         }
                         else
                         {
                             MessageBox.Show("Data Not Inserted!");
                         }
                     }
+                    
                 }
                 catch (MySqlException ex)
                 {
@@ -121,17 +124,13 @@ namespace FinalProject
                         int rowsAffected = command.ExecuteNonQuery();
                         if (rowsAffected > 0)
                         {
-                            MessageBox.Show("Data Updated!");
-                        }
-                        else
-                        {
-                            MessageBox.Show("No matching record found for the given registration number.");
+                            MessageBox.Show("Recode Updated Successful!", "Update Student");
                         }
                     }
                 }
                 catch (MySqlException ex)
                 {
-                    MessageBox.Show("Error: " + ex.Message);
+                    Console.WriteLine(ex.Message);
                 }
             }
         }
@@ -155,7 +154,7 @@ namespace FinalProject
             }
             catch (Exception ex)
             {
-                MessageBox.Show (ex.Message);
+                Console.WriteLine(ex.Message);
             }
             finally
             {
@@ -193,20 +192,21 @@ namespace FinalProject
                             tb_parentName.Text = reader["parentName"].ToString();
                             tb_parentNIC.Text = reader["parentnic"].ToString();
                             tb_email.Text = reader["email"].ToString();
+                            dtp_dof.Text = reader["dateOfBirth"].ToString();
 
-                            //" SET  dateOfBirth = @DateOfBirth, gender = @Gender, " +
-                            // 
-                            // 
-                            //
-
-
-                            rb_female.Checked = false;
-                            rb_male.Checked = false;
+                            if (reader["gender"].ToString() == "male")
+                            {
+                                rb_male.Checked = true;
+                                rb_female.Checked = false;
+                            }
+                            else if(reader["gender"].ToString() == "female")
+                            {
+                                rb_female.Checked = true;
+                                rb_male.Checked = false;
+                            }
+                            
                         }
-                        else
-                        {
-                            MessageBox.Show("No matching record found for the given registration number.");
-                        }
+                        
                     }
                 }
             }
@@ -221,10 +221,27 @@ namespace FinalProject
         }
         public void deleteIthem()
         {
+            ConnectionsVariable connectionsVariable = new ConnectionsVariable();
+            MySqlConnection connection = new MySqlConnection($"datasource={connectionsVariable.Server}; port={connectionsVariable.Port}; username={connectionsVariable.User}; password={connectionsVariable.Password}; database={connectionsVariable.Database}");
+            string query = $"DELETE FROM {connectionsVariable.Table} WHERE regNo = {cb_regNo.Text}";
+            connection.Open();
 
-
-            ClearRegister();
-            RegisterNo();
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                cmd.ExecuteNonQuery();
+                MessageBox.Show("Data deleted successfully!");
+                ClearRegister();
+                RegisterNo();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
 
 
@@ -241,6 +258,7 @@ namespace FinalProject
         private void btn_clear_Click(object sender, EventArgs e)
         {
             ClearRegister();
+            cb_regNo.Text = "";
         }
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -256,20 +274,17 @@ namespace FinalProject
         {
             loggin_form loggin_Form = new loggin_form();
             loggin_Form.Show();
-            this.Close();
+            this.Hide();
         }
-
-        private void btnConnections_Click(object sender, EventArgs e)
-        {
-            //ConnectionsVariable connectionsVariable = new ConnectionsVariable();
-            
-        }
-
         private void btn_register_Click(object sender, EventArgs e)
         {
             AddInformations();
+            RegisterNo();
         }
-
+        private void cb_regNo_MouseUp(object sender, MouseEventArgs e)
+        {
+            UpdateTextBoxes();
+        }
         private void cb_regNo_TextChanged(object sender, EventArgs e)
         {
             UpdateTextBoxes();
@@ -279,10 +294,18 @@ namespace FinalProject
         {
             UpdateInformation();
         }
-
         private void btn_delete_Click(object sender, EventArgs e)
         {
-
+            DialogResult askDelete = MessageBox.Show("Are you sure, Do you really want to Delete this Recode...?", "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (askDelete == DialogResult.Yes)
+            {
+                deleteIthem();
+                ClearRegister();
+                RegisterNo();
+                cb_regNo.Text = "";
+            }
         }
+
+        
     }
 }
