@@ -45,8 +45,8 @@ namespace FinalProject
             string gender = rb_male.Checked && !rb_female.Checked ? "male" : "female";
 
             string insertQuery = "INSERT INTO " + connectionsVariable.Database + "." + connectionsVariable.Table +
-                                 "(regNo, firstName, lastName, dateOfBirth, gender, address, email, mobilePhone, homePhone, parentName, nic, contactNo) " +
-                                 "VALUES (@RegNo, @FirstName, @LastName, @DateOfBirth, @Gender, @Address, @Email, @MobilePhone, @HomePhone, @ParentName, @NIC, @ContactNo)";
+                                 "(regNo, firstName, lastName, dateOfBirth, gender, address, email, mobilePhone, homePhone, parentName, nic, contactNo, parentNic) " +
+                                 "VALUES (@RegNo, @FirstName, @LastName, @DateOfBirth, @Gender, @Address, @Email, @MobilePhone, @HomePhone, @ParentName, @NIC, @ContactNo, @ParentNic)";
 
             using (MySqlConnection connection = new MySqlConnection($"datasource={connectionsVariable.Server}; port={connectionsVariable.Port}; username={connectionsVariable.User}; password={connectionsVariable.Password};"))
             {
@@ -67,6 +67,7 @@ namespace FinalProject
                         command.Parameters.AddWithValue("@ParentName", tb_parentName.Text);
                         command.Parameters.AddWithValue("@NIC", tb_NIC.Text);
                         command.Parameters.AddWithValue("@ContactNo", tb_parentContact.Text);
+                        command.Parameters.AddWithValue("@ParentNic", tb_parentNIC.Text);
 
                         if (command.ExecuteNonQuery() == 1)
                         {
@@ -84,14 +85,16 @@ namespace FinalProject
                 }
             }
         }
-        public void UpdateInformation(int regNo, string firstName, string lastName, string dateOfBirth, string gender, string address, string email, string mobilePhone, string homePhone, string parentName, string nic, string contactNo)
+        public void UpdateInformation()
         {
             ConnectionsVariable connectionsVariable = new ConnectionsVariable();
+
+            string gender = rb_male.Checked && !rb_female.Checked ? "male" : "female";
 
             string updateQuery = "UPDATE " + connectionsVariable.Database + "." + connectionsVariable.Table +
                                 " SET firstName = @FirstName, lastName = @LastName, dateOfBirth = @DateOfBirth, gender = @Gender, " +
                                 "address = @Address, email = @Email, mobilePhone = @MobilePhone, homePhone = @HomePhone, " +
-                                "parentName = @ParentName, nic = @NIC, contactNo = @ContactNo " +
+                                "parentName = @ParentName, nic = @NIC, contactNo = @ContactNo, parentNic = @ParentNic " +
                                 "WHERE regNo = @RegNo";
 
             using (MySqlConnection connection = new MySqlConnection($"datasource={connectionsVariable.Server}; port={connectionsVariable.Port}; username={connectionsVariable.User}; password={connectionsVariable.Password};"))
@@ -101,18 +104,19 @@ namespace FinalProject
                     connection.Open();
                     using (MySqlCommand command = new MySqlCommand(updateQuery, connection))
                     {
-                        command.Parameters.AddWithValue("@FirstName", firstName);
-                        command.Parameters.AddWithValue("@LastName", lastName);
-                        command.Parameters.AddWithValue("@DateOfBirth", dateOfBirth);
+                        command.Parameters.AddWithValue("@FirstName", tb_firstName.Text);
+                        command.Parameters.AddWithValue("@LastName", tb_lastName.Text);
+                        command.Parameters.AddWithValue("@DateOfBirth", dtp_dof.Value.ToString("yyyy-MM-dd"));
                         command.Parameters.AddWithValue("@Gender", gender);
-                        command.Parameters.AddWithValue("@Address", address);
-                        command.Parameters.AddWithValue("@Email", email);
-                        command.Parameters.AddWithValue("@MobilePhone", mobilePhone);
-                        command.Parameters.AddWithValue("@HomePhone", homePhone);
-                        command.Parameters.AddWithValue("@ParentName", parentName);
-                        command.Parameters.AddWithValue("@NIC", nic);
-                        command.Parameters.AddWithValue("@ContactNo", contactNo);
-                        command.Parameters.AddWithValue("@RegNo", regNo);
+                        command.Parameters.AddWithValue("@Address", tb_address.Text);
+                        command.Parameters.AddWithValue("@Email", tb_email.Text);
+                        command.Parameters.AddWithValue("@MobilePhone", tb_mobileNumber.Text);
+                        command.Parameters.AddWithValue("@HomePhone", tb_homeNumber.Text);
+                        command.Parameters.AddWithValue("@ParentName", tb_parentName.Text);
+                        command.Parameters.AddWithValue("@NIC", tb_NIC.Text);
+                        command.Parameters.AddWithValue("@ContactNo", tb_parentContact.Text);
+                        command.Parameters.AddWithValue("@RegNo", cb_regNo.Text);
+                        command.Parameters.AddWithValue("@ParentNic", tb_parentNIC.Text);
 
                         int rowsAffected = command.ExecuteNonQuery();
                         if (rowsAffected > 0)
@@ -138,7 +142,7 @@ namespace FinalProject
             MySqlConnection connection = new MySqlConnection($"datasource={connectionsVariable.Server}; port={connectionsVariable.Port}; username={connectionsVariable.User}; password={connectionsVariable.Password};");
             try
             {
-                String selectQuery = $"SELECT * From {connectionsVariable.Database}.{connectionsVariable.Table}";
+                String selectQuery = $"SELECT * FROM {connectionsVariable.Database}.{connectionsVariable.Table}";
                 connection.Open();
 
                 MySqlCommand command = new MySqlCommand(selectQuery, connection);
@@ -163,9 +167,66 @@ namespace FinalProject
         {
             ClearRegister();
             ConnectionsVariable connectionsVariable = new ConnectionsVariable();
-            MySqlConnection Connection = new MySqlConnection($"datasource={connectionsVariable.Server}; port={connectionsVariable.Port}; username={connectionsVariable.User}; password={connectionsVariable.Password};");
+            MySqlConnection connection = new MySqlConnection($"datasource={connectionsVariable.Server}; port={connectionsVariable.Port}; username={connectionsVariable.User}; password={connectionsVariable.Password};");
 
+            try
+            { 
+                string query = $"SELECT * FROM {connectionsVariable.Database}.{connectionsVariable.Table} WHERE regNo=@RegNo";
+
+                connection.Open();
+
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@RegNo", cb_regNo.Text);
+
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            tb_address.Text = reader["address"].ToString();
+                            tb_firstName.Text = reader["firstName"].ToString();
+                            tb_homeNumber.Text = reader["homePhone"].ToString();
+                            tb_lastName.Text = reader["lastName"].ToString();
+                            tb_mobileNumber.Text = reader["mobilePhone"].ToString();
+                            tb_NIC.Text = reader["nic"].ToString();
+                            tb_parentContact.Text = reader["contactNo"].ToString();
+                            tb_parentName.Text = reader["parentName"].ToString();
+                            tb_parentNIC.Text = reader["parentnic"].ToString();
+                            tb_email.Text = reader["email"].ToString();
+
+                            //" SET  dateOfBirth = @DateOfBirth, gender = @Gender, " +
+                            // 
+                            // 
+                            //
+
+
+                            rb_female.Checked = false;
+                            rb_male.Checked = false;
+                        }
+                        else
+                        {
+                            MessageBox.Show("No matching record found for the given registration number.");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
         }
+        public void deleteIthem()
+        {
+
+
+            ClearRegister();
+            RegisterNo();
+        }
+
 
 
 
@@ -207,6 +268,21 @@ namespace FinalProject
         private void btn_register_Click(object sender, EventArgs e)
         {
             AddInformations();
+        }
+
+        private void cb_regNo_TextChanged(object sender, EventArgs e)
+        {
+            UpdateTextBoxes();
+        }
+
+        private void btn_update_Click(object sender, EventArgs e)
+        {
+            UpdateInformation();
+        }
+
+        private void btn_delete_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

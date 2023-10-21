@@ -131,6 +131,7 @@
             this.btn_delete.TabIndex = 7;
             this.btn_delete.Text = "Delete";
             this.btn_delete.UseVisualStyleBackColor = true;
+            this.btn_delete.Click += new System.EventHandler(this.btn_delete_Click);
             // 
             // btn_update
             // 
@@ -140,6 +141,7 @@
             this.btn_update.TabIndex = 6;
             this.btn_update.Text = "Update";
             this.btn_update.UseVisualStyleBackColor = true;
+            this.btn_update.Click += new System.EventHandler(this.btn_update_Click);
             // 
             // btn_register
             // 
@@ -201,9 +203,9 @@
             this.label12.AutoSize = true;
             this.label12.Location = new System.Drawing.Point(11, 69);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(29, 16);
+            this.label12.Size = new System.Drawing.Size(71, 16);
             this.label12.TabIndex = 0;
-            this.label12.Text = "NIC";
+            this.label12.Text = "Parent NIC";
             // 
             // label11
             // 
@@ -411,6 +413,7 @@
             this.cb_regNo.Name = "cb_regNo";
             this.cb_regNo.Size = new System.Drawing.Size(249, 24);
             this.cb_regNo.TabIndex = 0;
+            this.cb_regNo.TextChanged += new System.EventHandler(this.cb_regNo_TextChanged);
             // 
             // linkLabel1
             // 
