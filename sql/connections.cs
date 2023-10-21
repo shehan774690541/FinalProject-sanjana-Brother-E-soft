@@ -19,7 +19,7 @@ namespace FinalProject.sql
             string connectionString;
             connectionString = $"SERVER={connectionsVariable.Server};DATABASE={connectionsVariable.Database};UID={connectionsVariable.User};PASSWORD={connectionsVariable.Password};";
 
-            connection = new MySqlConnection(connectionString);
+            connection = new MySqlConnection(connectionString); 
         }
 
         public bool CheckConnection()
